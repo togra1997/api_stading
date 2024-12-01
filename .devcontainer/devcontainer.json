@@ -1,0 +1,36 @@
+{
+	"name": "api",
+	// dockerComposeを使う例
+	// "dockerComposeFile": "docker-compose.yml",
+	// "service": "app",
+	// "workspaceFolder": "/app",
+	"build": {
+		"dockerfile": "Dockerfile" // 相対パス表記
+	},
+	// VScodeの設定
+	"customizations": {
+		"vscode": {
+			// 拡張機能のインストール
+			"extensions": [
+				"ms-python.python",
+				"njpwerner.autodocstring",
+				"charliermarsh.ruff",
+				"tamasfe.even-better-toml",
+				"esbenp.prettier-vscode"
+			],
+			// setting.jsonの設定
+			"settings": {
+				
+					"[python]": {
+					  "editor.formatOnSave": true,
+					  "editor.codeActionsOnSave": {
+						"source.fixAll": "explicit",
+						"source.organizeImports": "explicit"
+					  },
+					  "editor.defaultFormatter": "charliermarsh.ruff"
+					}
+				  
+			}
+		}
+	}
+}
