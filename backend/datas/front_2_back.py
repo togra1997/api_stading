@@ -1,7 +1,9 @@
 """front 2 back data preset."""
 
-from pydantic import BaseModel
 from dataclasses import dataclass
+
+from pydantic import BaseModel
+
 
 @dataclass
 class RegistarData(BaseModel):

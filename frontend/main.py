@@ -1,25 +1,13 @@
 """front end ui."""
 
-import json
-
-import pandas as pd
-import requests
 import streamlit as st
+from ui import delete_ui, registar_ui
 
-if st.button("post"):
-    url = "http://127.0.0.1:8000"
+st.title("工数管理アプリ(メインAPI)")
 
-    res = requests.post(
-        url=url,
-        data=json.dumps(
-            {
-                "start_time": "10:30",
-                "end_time": "11:00",
-                "annkenn": "d",
-                "work": "e",
-                "kousuutukesaki": "f",
-            },
-        ),
-        timeout=100,
-    )
-    st.write(pd.read_json(res.json()))
+tab = st.tabs(["登録", "集計", "削除"])
+
+with tab[0]:
+    registar_ui()
+with tab[1]:
+    delete_ui()
