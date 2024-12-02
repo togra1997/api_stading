@@ -23,9 +23,18 @@ def registar_data(data: RegistarData) -> json:
     """
     today = str(datetime.datetime.now(tz=datetime.UTC).date())
 
-    df_input = pd.DataFrame(asdict(data), index=[0])
-    df_input["日付"] = today
-    table = ibis.memtable(df_input)
+    input_df = pd.DataFrame(asdict(data), index=[0])
+    input_df["日付"] = today
+    input_df = input_df.rename(
+        columns={
+            "start_time": "開始時刻",
+            "end_time": "終了時刻",
+            "annkenn": "案件",
+            "kousuutukesaki": "工数付け先",
+            "work": "作業内容",
+        },
+    )
+    table = ibis.memtable(input_df)
     table2 = table.mutate(
         経過時間=(
             datetime.datetime.strptime(
@@ -49,7 +58,6 @@ def registar_data(data: RegistarData) -> json:
 
     df_output = concat_table.execute()
     df_output["id"] = df_output.index
-
     concat_table = ibis.memtable(df_output)
 
     concat_table.to_csv("./records.csv")

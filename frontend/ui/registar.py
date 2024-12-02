@@ -1,6 +1,7 @@
 """登録UI."""
 
 import json
+from io import StringIO
 
 import pandas as pd
 import requests
@@ -38,4 +39,4 @@ def registar_ui() -> None:
             timeout=100,
         )
 
-        st.write(pd.read_json(res.json()))
+        st.write(pd.read_json(StringIO(res.json())))

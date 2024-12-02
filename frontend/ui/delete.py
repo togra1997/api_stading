@@ -16,5 +16,6 @@ def delete_ui() -> None:
             url=f"{url}/{id}",
             timeout=100,
         )
-        st.write(pd.read_json(StringIO(res.json())))
-    # res = requests.get(url=url, timeout=100)
+
+    res1 = requests.get(url=url, timeout=100)
+    st.write(pd.read_json(StringIO(res1.json())))
