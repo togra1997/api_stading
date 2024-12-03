@@ -23,7 +23,7 @@ def registar_ui() -> None:
     work = st.text_input("作業")
 
     if st.button("登録"):
-        url = "http://127.0.0.1:8000"
+        url = "http://127.0.0.1:8000/work"
 
         res = requests.post(
             url=url,

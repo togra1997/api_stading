@@ -10,7 +10,7 @@ import streamlit as st
 def delete_ui() -> None:
     """削除UI."""
     id = st.text_input("削除するID")
-    url = "http://127.0.0.1:8000"
+    url = "http://127.0.0.1:8000/work"
     if st.button("削除"):
         res = requests.delete(
             url=f"{url}/{id}",

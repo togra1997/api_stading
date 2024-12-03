@@ -33,3 +33,15 @@ def get_all_data() -> json:
     table = ibis.read_csv("./records.csv")
 
     return table.execute().to_json()
+
+
+def get_task_data() -> json:
+    """データ取得.
+
+    Returns:
+        json: _description_
+
+    """
+    table = ibis.read_csv("./task.csv")
+    print(table)
+    return table.execute().to_json()

@@ -7,7 +7,7 @@ import streamlit as st
 
 
 def totaling_ui():
-    url = "http://127.0.0.1:8000"
+    url = "http://127.0.0.1:8000/work"
     res = requests.get(url=f"{url}/all", timeout=100)
 
     list_df = pd.read_json(StringIO(res.json()))
