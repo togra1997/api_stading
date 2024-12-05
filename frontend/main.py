@@ -1,17 +1,14 @@
-"""front end ui."""
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 
-import streamlit as st
-from ui import delete_ui, registar_ui, setting, totaling_ui
+app = FastAPI()
+app.mount(path="/static", app=StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory="templates")
 
-st.title("工数管理アプリ(メインAPI)")
 
-tab = st.tabs(["登録", "集計", "削除", "設定"])
-
-with tab[0]:
-    registar_ui()
-with tab[1]:
-    totaling_ui()
-with tab[2]:
-    delete_ui()
-with tab[3]:
-    setting()
+@app.get("/", response_class=HTMLResponse)
+async def read_root(request: Request):
+    context = {"request": request, "name": "ばなな"}
+    return templates.TemplateResponse("index.html", context)
