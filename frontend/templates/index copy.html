@@ -68,81 +68,27 @@
     </ul>
 
     <!--タブの中身-->
-
     <div class="tab-content">
       <div id="photo1" class="tab-pane active">
-        <div class="container border border-primary">
-          <p class="h1">工数付けるメニュー</p>
-          <div class="row">
-            <div class="col-6">
-              <label>開始時刻</label>
-              <br />
-              <input type="time" name="example" id="start-time" />
-            </div>
-
-            <div class="col-6">
-              <label>終了時刻</label>
-              <br />
-              <input type="time" name="example" id="end-time" />
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-6">
-              <form class="was-validated">
-                <label class="h4">工数付け先</label>
-                <select
-                  class="form-select"
-                  required
-                  aria-label="select example"
-                  id="kousuutukesaki"
-                >
-                  {% for item in items %}
-                  <option value="{{item}}">{{item}}</option>
-                  {% endfor %}
-                </select>
-
-                <div class="invalid-feedback">
-                  Example invalid select feedback
-                </div>
-              </form>
-            </div>
-
-            <div class="col-6">
-              <form class="was-validated">
-                <label class="h4">案件</label>
-                <select
-                  class="form-select"
-                  required
-                  aria-label="select example"
-                  id="work"
-                >
-                  {% for item in test %}
-                  <option value="{{item}}">{{item}}</option>
-                  {% endfor %}
-                </select>
-
-                <div class="invalid-feedback">
-                  Example invalid select feedback
-                </div>
-              </form>
-            </div>
-          </div>
-          <div class="row">
-            <div>
-              <label class="h4">作業内容</label>
+        <div class="border border-primary col-6">
+          <p class="h1">test</p>
+          <form class="was-validated">
+            <div class="mb-3">
               <select
                 class="form-select"
                 required
                 aria-label="select example"
-                id="work-detaile"
+                id="test"
               >
-                {% for item in items %}
-                <option value="{{item}}">{{item}}</option>
-                {% endfor %}
+                <option value="">Open this select menu</option>
+                <option value="aaa">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
               </select>
+              <div class="invalid-feedback">
+                Example invalid select feedback
+              </div>
             </div>
-          </div>
-          <div class="col-3">
             <button
               type="button"
               class="btn btn-primary"
@@ -150,10 +96,9 @@
             >
               Base class
             </button>
-          </div>
+          </form>
         </div>
       </div>
-
       <div id="photo2" class="tab-pane" id="photo2-pane">test</div>
       <div id="photo3" class="tab-pane" id="photo3-pane">
         <img
@@ -173,26 +118,9 @@
     <!--javascript-->
     <script>
       function onclickSample() {
-        let kousuutukesaki = document.getElementById("kousuutukesaki");
-        let work_detaile = document.getElementById("work-detaile");
-        let star_time = document.getElementById("start-time");
-        let end_time = document.getElementById("end-time");
-        let annkenn = document.getElementById("work");
-        // alert(
-        //   "工数付け先：" +
-        //     kousuutukesaki.value +
-        //     "\n案件：" +
-        //     annkenn.value +
-        //     "\n開始時間：" +
-        //     star_time.value +
-        //     "\n終了時間：" +
-        //     end_time.value +
-        //     "\n作業内容：" +
-        //     work_detaile.value
-        // );
-        axios
-          .get("http://127.0.0.1:8000/work/all")
-          .then((response) => alert(response.data));
+        let element = document.getElementById("test");
+
+        alert(element.value);
       }
     </script>
   </body>

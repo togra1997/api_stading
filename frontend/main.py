@@ -10,5 +10,9 @@ templates = Jinja2Templates(directory="templates")
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
-    context = {"request": request, "name": "ばなな"}
+    context = {
+        "request": request,
+        "items": ["禿", "ばなな"],
+        "test": ["aaa", "bbb", "ccc"],
+    }
     return templates.TemplateResponse("index.html", context)
