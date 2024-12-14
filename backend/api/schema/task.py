@@ -19,19 +19,25 @@ class BaseTask(BaseModel):
     """基本的なタスクモデルを定義します."""
 
     name: str
-    completed: bool
 
 
 class AddTask(BaseTask):
     """タスクを追加するためのモデルを定義します."""
 
     def make_taskdata(self) -> ibis.Table:
-        self.completed = False
-        df = pd.DataFrame({"name": [self.name], "completed": [self.completed]})
-        return ibis.memtable(df)
+        """タスクデータを作成し、完了フラグを設定します.
+
+        Returns:
+            ibis.Table: 作成されたタスクデータのテーブル。
+
+        """
+        completed = False
+        return_df = pd.DataFrame({"name": [self.name], "completed": [completed]})
+        return ibis.memtable(return_df)
 
 
 class GetTask(BaseTask):
     """タスクを取得するためのモデルを定義します."""
 
     id: int
+    completed: bool
