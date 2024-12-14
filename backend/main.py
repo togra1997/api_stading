@@ -1,59 +1,16 @@
-"""backend main script."""
+"""このモジュールは、FastAPIを使用してAPIを構築するための基本的な設定を行います.
 
-from datas import RegistarData
+- `api.api`モジュールから`router`をインポートし、APIのエンドポイントを定義します。
+- FastAPIフレームワークの`FastAPI`クラスを使用してアプリケーションインスタンスを作成します.
+- インポートした`router`をアプリケーションに組み込みます。
+
+使用方法:
+    uvicorn main:app --reload
+"""
+
+from api.api import router
 from fastapi import FastAPI
-from func import calc_total, delete_data, get_all_data, get_today_data, registar_data
 
 app = FastAPI()
 
-
-@app.get("/")
-def get_today_data_api():
-    """Get today data.
-
-    Returns:
-        json: _description_
-
-    """
-    return get_today_data()
-
-
-@app.get("/all")
-def get_all_data_api():
-    """Get today data.
-
-    Returns:
-        json: _description_
-
-    """
-    return get_all_data()
-
-
-@app.get("/{target_month}")
-def get_total_data_api(target_month):
-    return calc_total(target_month)
-
-
-@app.post("/")
-def registar_data_api(data: RegistarData):
-    """Registar function.
-
-    Args:
-        data (RegistarData): _description_
-
-    Returns:
-        json: _description_
-
-    """
-    return registar_data(data=data)
-
-
-@app.delete("/{id}")
-def delete_data_api(id):
-    """Delete data.
-
-    Args:
-        id (_type_): _description_
-
-    """
-    return delete_data(delet_id=id)
+app.include_router(router, prefix="")
