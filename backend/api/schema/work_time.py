@@ -11,7 +11,6 @@ from pydantic import BaseModel
 class BaseWorkTime(BaseModel):
     """基本的な工数管理のクラスを定義します."""
 
-    date: str  # 工数の日付
     start: str  # 作業開始時刻
     end: str  # 作業終了時刻
     task: str  # タスク名
@@ -21,6 +20,7 @@ class BaseWorkTime(BaseModel):
 class GetWorkTime(BaseWorkTime):
     """工数を取得するためのモデルを定義します."""
 
+    date: str  # 工数の日付
     id: int  # 工数のID
 
 
@@ -36,7 +36,6 @@ class AddWorkTime(BaseWorkTime):
         """
         return_df = pd.DataFrame(
             {
-                "date": f"{self.date}",
                 "start": f"{self.start}",
                 "end": f"{self.end}",
                 "task": f"{self.task}",

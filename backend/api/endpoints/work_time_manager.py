@@ -6,6 +6,7 @@
 - DELETE /work_time/{target_id}: 指定されたIDの工数データを削除します。
 """
 
+import datetime
 from typing import Annotated
 
 import ibis
@@ -51,6 +52,12 @@ def add_work_time(
     """
     work_time_table = work_time_data.make_worktimedata()
 
+    work_time_table = work_time_table.mutate(
+        date=ibis.literal(
+            datetime.datetime.now(tz=datetime.UTC).strftime("%Y-%m-%d"),
+            type=str,
+        ),
+    )
     return_df = pd.concat(
         [work_time_data_manager.read_csv_data().execute(), work_time_table.execute()],
     )
