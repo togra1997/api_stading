@@ -41,3 +41,9 @@ class GetTask(BaseTask):
 
     id: int
     completed: bool
+
+
+class UpdateTask(BaseTask):
+    """タスクを更新するためのモデルを定義します."""
+
+    completed: bool

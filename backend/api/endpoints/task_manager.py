@@ -79,3 +79,33 @@ def delete_task(
     task_data_manager.save_csv_data(ibis.memtable(return_df))
 
     return [task.GetTask(**t) for t in return_df.to_dict(orient="records")]
+
+
+@router.put("/{target_id}")
+def update_task(
+    target_id: str,
+    task_data_manager: Annotated[ManagedTaskCsv, Depends(ManagedTaskCsv)],
+    update_data: task.UpdateTask,
+) -> list[task.GetTask]:
+    """指定されたIDのタスクを削除します.
+
+    パラメータ:
+    - target_id: 削除対象のタスクID。
+    - task_csv: CSVデータを管理するための依存関係インスタンス。
+
+    戻り値:
+    - List[task.GetTask]: 削除後のタスクのリスト。
+    """
+    task_table = task_data_manager.read_csv_data()
+
+    return_df = task_table.mutate(
+        completed=ibis.case()
+        .when(task_table["id"] == int(target_id), update_data.completed)
+        .else_(task_table["completed"])
+        .end(),
+    ).execute()
+
+    return_df["id"] = return_df.reset_index(drop=True).index
+    task_data_manager.save_csv_data(ibis.memtable(return_df))
+
+    return [task.GetTask(**t) for t in return_df.to_dict(orient="records")]

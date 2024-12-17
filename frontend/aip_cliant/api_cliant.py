@@ -54,7 +54,11 @@ class ApiCliant:
             Response: リクエストのレスポンスオブジェクト。
 
         """
-        return requests.put(f"{self.url}/{target_id}", data, timeout=10).json()
+        return requests.put(
+            f"{self.url}/{target_id}",
+            data=json.dumps(data),
+            timeout=10,
+        ).json()
 
     def delete(self, target_id: str):
         """DELETEリクエストを送信する.
