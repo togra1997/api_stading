@@ -29,7 +29,7 @@ class ApiCliant:
             Response: リクエストのレスポンスオブジェクト。
 
         """
-        return requests.get(self.url, timeout=10).json()
+        return requests.get(self.url, timeout=10)
 
     def post(self, data: dict):
         """POSTリクエストを送信する.
@@ -41,7 +41,7 @@ class ApiCliant:
             Response: リクエストのレスポンスオブジェクト。
 
         """
-        return requests.post(url=self.url, data=json.dumps(data), timeout=10).json()
+        return requests.post(url=self.url, data=json.dumps(data), timeout=10)
 
     def put(self, data: dict, target_id: str):
         """PUTリクエストを送信する.
@@ -58,7 +58,7 @@ class ApiCliant:
             f"{self.url}/{target_id}",
             data=json.dumps(data),
             timeout=10,
-        ).json()
+        )
 
     def delete(self, target_id: str):
         """DELETEリクエストを送信する.
@@ -70,4 +70,4 @@ class ApiCliant:
             Response: リクエストのレスポンスオブジェクト。
 
         """
-        return requests.delete(f"{self.url}/{target_id}", timeout=10).json()
+        return requests.delete(f"{self.url}/{target_id}", timeout=10)

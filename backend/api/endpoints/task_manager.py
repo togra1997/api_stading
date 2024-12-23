@@ -17,10 +17,10 @@ from fastapi import APIRouter, Depends
 router = APIRouter()
 
 
-@router.get("", response_model=list[task.GetTask])
+@router.get("", response_model=task.GetAllTask)
 def get_tasks(
     task_data_manager: Annotated[ManagedTaskCsv, Depends(ManagedTaskCsv)],
-) -> list[task.GetTask]:
+) -> task.GetAllTask:
     """新しいタスクを追加します.
 
     パラメータ:
@@ -31,7 +31,7 @@ def get_tasks(
     - List[task.GetTask]: 追加後のタスクのリスト。
     """
     task_data = task_data_manager.read_csv_data().execute().to_dict(orient="records")
-    return [task.GetTask(**t) for t in task_data]
+    return task.GetAllTask(data=[task.GetTask(**t) for t in task_data])
 
 
 @router.post("", response_model=list[task.GetTask])

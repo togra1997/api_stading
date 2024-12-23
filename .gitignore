@@ -5,6 +5,6 @@ build/
 dist/
 wheels/
 *.egg-info
-
+.mppy_cache/*
 # Virtual environments
 .venv

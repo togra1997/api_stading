@@ -15,41 +15,33 @@ from pydantic import BaseModel
 ibis.set_backend("polars")
 
 
-class BaseTask(BaseModel):
+class BaseEffortAssingment(BaseModel):
     """基本的なタスクモデルを定義します."""
 
     name: str
 
 
-class AddTask(BaseTask):
+class AddEffortAssingment(BaseEffortAssingment):
     """タスクを追加するためのモデルを定義します."""
 
-    def make_taskdata(self) -> ibis.Table:
+    def make_effort_assignment_data(self) -> ibis.Table:
         """タスクデータを作成し、完了フラグを設定します.
 
         Returns:
             ibis.Table: 作成されたタスクデータのテーブル。
 
         """
-        completed = False
-        return_df = pd.DataFrame({"name": [self.name], "completed": [completed]})
+        return_df = pd.DataFrame({"name": [self.name]})
         return ibis.memtable(return_df)
 
 
-class GetTask(BaseTask):
+class GetEffortAssingment(BaseEffortAssingment):
     """タスクを取得するためのモデルを定義します."""
 
     id: int
-    completed: bool
 
 
-class GetAllTask(BaseModel):
+class GetAllEffortAssingment(BaseModel):
     """全てのタスクを取得するためのモデルを定義します."""
 
-    data: list[GetTask]
-
-
-class UpdateTask(BaseTask):
-    """タスクを更新するためのモデルを定義します."""
-
-    completed: bool
+    data: list[GetEffortAssingment]

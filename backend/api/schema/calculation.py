@@ -17,4 +17,4 @@ ibis.set_backend("polars")
 class Calc(BaseModel):
     """基本的な集計モデルを定義します."""
 
-    data: dict
+    data: list

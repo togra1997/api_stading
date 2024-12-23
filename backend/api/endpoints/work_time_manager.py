@@ -18,10 +18,10 @@ from fastapi import APIRouter, Depends
 router = APIRouter()
 
 
-@router.get("", response_model=list[work_time.GetWorkTime])
+@router.get("", response_model=work_time.GetAllWorkTime)
 def get_work_time(
     work_time_data_manager: Annotated[ManagedWorkTimeCsv, Depends(ManagedWorkTimeCsv)],
-) -> list[work_time.GetWorkTime]:
+) -> work_time.GetAllWorkTime:
     """すべての工数データを取得します.
 
     パラメータ:
@@ -33,7 +33,9 @@ def get_work_time(
     work_time_data = (
         work_time_data_manager.read_csv_data().execute().to_dict(orient="records")
     )
-    return [work_time.GetWorkTime(**work_data) for work_data in work_time_data]
+    return work_time.GetAllWorkTime(
+        data=[work_time.GetWorkTime(**work_data) for work_data in work_time_data],
+    )
 
 
 @router.post("", response_model=list[work_time.GetWorkTime])

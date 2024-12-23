@@ -17,7 +17,8 @@
 				"charliermarsh.ruff",
 				"tamasfe.even-better-toml",
 				"esbenp.prettier-vscode",
-				"GitHub.copilot"
+				"GitHub.copilot",
+				"ms-python.mypy-type-checker"
 			],
 			// setting.jsonの設定
 			"settings": {

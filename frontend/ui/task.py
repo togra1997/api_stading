@@ -1,65 +1,90 @@
-import pandas as pd
+"""このモジュールは、タスクの登録、更新、削除、および表示を行うための関数を提供します.
+
+関数:
+    fetch_and_display_tasks() -> None:
+        APIからタスクデータを取得し、テーブル形式で表示する関数。
+
+    regist_task() -> None:
+        タスクを登録するフォームを表示し、登録処理を行う関数。
+
+    update_task() -> None:
+        タスクを更新するフォームを表示し、更新処理を行う関数。
+
+    delete_task() -> None:
+        タスクを削除するフォームを表示し、削除処理を行う関数。
+"""
+
 import streamlit as st
 from aip_cliant.api_cliant import ApiCliant
 
+api_cliant = ApiCliant(url="http://localhost:8000/tasks")
 
-class TaskUi:
-    """工数データを管理するためのUIクラス."""
 
-    def __init__(self, url: str) -> None:
-        """WorkTimeUiのコンストラクタ.
+def fetch_and_display_tasks() -> None:
+    """APIからタスクデータを取得し、テーブル形式で表示する関数."""
+    res = api_cliant.get()
+    if res.status_code == 200:
+        data = res.json()
+        st.table(data["data"])
 
-        Args:
-            url (str): APIのベースURL。
 
-        """
-        self.url = url
-        self.cliant = ApiCliant(self.url)
+def regist_task() -> None:
+    """タスクを登録するフォームを表示し、登録処理を行う関数.
 
-    def registar_task(self) -> None:
-        with st.expander("タスク登録"):
-            name = st.text_input("タスク名", key="task_name")
-            data = {
-                "name": f"{name}",
-            }
+    Returns:
+        None
 
-            if st.button("登録", key="registar_task"):
-                res = self.cliant.post(data)
+    """
+    st.title("タスクフォーム")
 
-                st.write("登録に成功しました")
+    name = st.text_input("タスク名", key="registar_task_name")
 
-    def delete_task(self) -> None:
-        with st.expander("タスク削除"):
-            target_id = st.text_input("削除対象のタスクID", key="delete_task_id")
-            if st.button("削除", key="delete_task"):
-                res = self.cliant.delete(target_id=target_id)
+    if st.button("送信", key="registar_task_button"):
+        data = {"name": name}
 
-                st.write("削除に成功しました")
+        res = api_cliant.post(data=data)
+        if res.status_code == 200:
+            st.success("登録しました")
 
-    def update_task(self) -> None:
-        with st.expander("タスク更新"):
-            target_id = st.text_input("更新対象のタスクID", key="update_task_id")
+    fetch_and_display_tasks()
 
-            update_data = st.selectbox(
-                "ステータス",
-                options=[True, False],
-                key="update_task_complete",
-            )
 
-            if st.button("更新", key="update_task"):
-                data = {
-                    "name": "",
-                    "completed": update_data,
-                }
-                res = self.cliant.put(target_id=target_id, data=data)
+def update_task() -> None:
+    """タスクを更新するフォームを表示し、更新処理を行う関数.
 
-                st.write("更新に成功しました")
+    Returns:
+        None
 
-    def get_task(self) -> None:
-        res = self.cliant.get()
-        return_df = pd.DataFrame()
-        for data in res:
-            tmp_df = pd.DataFrame(data, index=[0])
-            return_df = pd.concat([return_df, tmp_df], axis=0, ignore_index=True)
+    """
+    st.title("タスクフォーム")
 
-        st.write(return_df)
+    target_id = st.text_input("更新するID", key="target_id")
+    status = st.selectbox("ステータス", ["True", "False"], key="status")
+
+    if st.button("送信", key="update_task_button"):
+        data = {"name": "", "completed": status}
+
+        res = api_cliant.put(target_id=target_id, data=data)
+        if res.status_code == 200:
+            st.success("更新しました")
+
+    fetch_and_display_tasks()
+
+
+def delete_task() -> None:
+    """タスクを削除するフォームを表示し、削除処理を行う関数.
+
+    Returns:
+        None
+
+    """
+    st.title("タスクフォーム")
+
+    target_id = st.text_input("削除するID", key="delete_target_id")
+
+    if st.button("送信", key="delete_task_button"):
+        res = api_cliant.delete(target_id=target_id)
+        if res.status_code == 200:
+            st.success("削除しました")
+
+    fetch_and_display_tasks()

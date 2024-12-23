@@ -14,7 +14,7 @@ class BaseWorkTime(BaseModel):
     start: str  # 作業開始時刻
     end: str  # 作業終了時刻
     task: str  # タスク名
-    effort_assignmen: str  # 工数付け先
+    effort_assignment: str | None  # 工数付け先
 
 
 class GetWorkTime(BaseWorkTime):
@@ -22,6 +22,12 @@ class GetWorkTime(BaseWorkTime):
 
     date: str  # 工数の日付
     id: int  # 工数のID
+
+
+class GetAllWorkTime(BaseModel):
+    """全ての工数を取得するためのモデルを定義します."""
+
+    data: list[GetWorkTime]
 
 
 class AddWorkTime(BaseWorkTime):
@@ -39,7 +45,7 @@ class AddWorkTime(BaseWorkTime):
                 "start": f"{self.start}",
                 "end": f"{self.end}",
                 "task": f"{self.task}",
-                "effort_assignmen": f"{self.effort_assignmen}",
+                "effort_assignment": f"{self.effort_assignment}",
             },
             index=[0],
         )
