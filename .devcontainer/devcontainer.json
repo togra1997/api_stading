@@ -18,7 +18,8 @@
 				"tamasfe.even-better-toml",
 				"esbenp.prettier-vscode",
 				"GitHub.copilot",
-				"ms-python.mypy-type-checker"
+				"ms-python.mypy-type-checker",
+				"mhutchie.git-graph"
 			],
 			// setting.jsonの設定
 			"settings": {
