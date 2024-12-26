@@ -1,0 +1,42 @@
+{
+  "name": "api",
+  // dockerComposeを使う例
+  // "dockerComposeFile": "docker-compose.yml",
+  // "service": "app",
+  // "workspaceFolder": "/app",
+  "build": {
+    "dockerfile": "Dockerfile" // 相対パス表記
+  },
+  // VScodeの設定
+  "customizations": {
+    "vscode": {
+      // 拡張機能のインストール
+      "extensions": [
+        "tamasfe.even-better-toml",
+        "esbenp.prettier-vscode",
+        "GitHub.copilot",
+        "mhutchie.git-graph",
+        "dsznajder.es7-react-js-snippets"
+      ],
+      // setting.jsonの設定
+      "settings": {
+        "[javascript]": {
+          "editor.formatOnSave": true,
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[javascriptreact]": {
+          "editor.formatOnSave": true,
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[typescript]": {
+          "editor.formatOnSave": true,
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[typescriptreact]": {
+          "editor.formatOnSave": true,
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        }
+      }
+    }
+  }
+}
