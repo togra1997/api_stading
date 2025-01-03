@@ -10,7 +10,14 @@
 
 from api.api import router
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # 必要に応じて許可するオリジンを指定
+    allow_credentials=True,
+    allow_methods=["*"],  # 必要に応じて許可するHTTPメソッドを指定
+    allow_headers=["*"],  # 必要に応じて許可するHTTPヘッダーを指定
+)
 app.include_router(router, prefix="")
